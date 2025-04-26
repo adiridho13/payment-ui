@@ -11,9 +11,10 @@ import QRGenerator from "@/app/payment/component/QrGenerator";
 interface PayButtonProps {
     selectedOption: { code: string; id: string };
     totalAmount: number;
+    disabled?: boolean;
 }
 
-export default function PayButton({ selectedOption, totalAmount }: PayButtonProps) {
+export default function PayButton({ selectedOption, totalAmount , disabled = false}: PayButtonProps) {
     const [loading, setLoading] = useState(false);
     const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null);
     const [timeLeft, setTimeLeft] = useState<string>('');
@@ -88,7 +89,7 @@ export default function PayButton({ selectedOption, totalAmount }: PayButtonProp
             {!paymentInfo ? (
                 <button
                     onClick={handlePay}
-                    disabled={loading}
+                    disabled={disabled || loading}
                     className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700
                      text-white rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >

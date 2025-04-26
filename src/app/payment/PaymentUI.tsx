@@ -34,7 +34,7 @@ export default function PaymentUI() {
     const pricePerFeature = 1000;
     const countNumber = parseInt(featureCount, 10) || 0;
     const totalPrice = countNumber * pricePerFeature;
-
+    const isPayDisabled = countNumber === 0;
     const toggleGroup = (label: string) =>
         setOpenGroup(openGroup === label ? null : label);
 
@@ -125,7 +125,8 @@ export default function PaymentUI() {
                         Tagihan: <strong>Rp {totalPrice.toLocaleString("id-ID")}</strong>
                     </p>
                     <div className="mt-4">
-                        <PayButton selectedOption={selectedOption} totalAmount={totalPrice} />
+                        <PayButton selectedOption={selectedOption} totalAmount={totalPrice}
+                                   disabled={isPayDisabled}/>
                     </div>
                 </div>}
 
