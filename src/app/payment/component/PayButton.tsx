@@ -1,12 +1,12 @@
 'use client';
-
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { PaymentInfo } from '@/app/payment/types/PaymentInfo';
-import { formatCurrency } from '@/app/payment/utils/CurrencyFormat';
-import { formatCountdown } from '@/app/payment/utils/ConvertTime';
-import { Loader } from 'lucide-react';
+import {useEffect, useState} from 'react';
+import api from '@/app/lib/api'
+import {PaymentInfo} from '@/app/payment/types/PaymentInfo';
+import {formatCurrency} from '@/app/payment/utils/CurrencyFormat';
+import {formatCountdown} from '@/app/payment/utils/ConvertTime';
+import {Loader} from 'lucide-react';
 import QRGenerator from "@/app/payment/component/QrGenerator";
+import axios from "axios";
 
 interface PayButtonProps {
     selectedOption: { code: string; id: string };
@@ -28,7 +28,7 @@ export default function PayButton({ selectedOption, totalAmount , disabled = fal
         setLoading(true);
         try {
             const referenceId = `ORDER-${Date.now()}`;
-            const { data } = await axios.post('http://localhost:3000/payment/pay', {
+            const { data } = await api.post('/payment/pay', {
                 name: 'Adi Ridho',
                 phone: '08123456789',
                 email: 'adi@example.com',
@@ -40,9 +40,25 @@ export default function PayButton({ selectedOption, totalAmount , disabled = fal
                 referenceId,
             });
             setPaymentInfo(data.Data);
-        } catch (err) {
-            console.error(err);
-            alert('Terjadi kesalahan saat pembayaran.');
+        } catch (error: unknown) {
+            let userMsg = "Terjadi kesalahan saat pembayaran."
+
+            if (axios.isAxiosError(error)) {
+                // log the full response payload
+                console.error("Response payload:", error.response?.data)
+
+                // extract the server’s `message` field if it exists
+                const serverMsg = (error.response?.data as any)?.message
+                if (typeof serverMsg === "string") {
+                    userMsg = serverMsg
+                }
+            } else {
+                console.error("Unknown error:", error)
+            }
+
+            // now both console and alert show the server’s message
+            console.error("Displayed to user:", userMsg)
+            alert(userMsg)
         } finally {
             setLoading(false);
         }
@@ -69,8 +85,8 @@ export default function PayButton({ selectedOption, totalAmount , disabled = fal
         if (!paymentInfo?.ReferenceId) return;
         const iv = setInterval(async () => {
             try {
-                const r = await axios.get(
-                    `http://localhost:3000/payment/status?referenceId=${paymentInfo.ReferenceId}`
+                const r = await api.get(
+                    `/payment/status?referenceId=${paymentInfo.ReferenceId}`
                 );
                 if (r.data?.paid) {
                     setIsPaid(true);
