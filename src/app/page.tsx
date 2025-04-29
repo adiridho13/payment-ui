@@ -3,7 +3,7 @@ import api from "@/app/lib/api";
 import {useState} from "react";
 import Link from 'next/link'
 import {useRouter} from 'next/navigation'
-import axios, {AxiosError, AxiosResponse} from "axios";
+import {AxiosError} from "axios";
 
 export default function Home() {
     const [username, setUsername] = useState('')
