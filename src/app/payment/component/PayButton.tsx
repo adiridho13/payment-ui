@@ -7,6 +7,7 @@ import {formatCountdown} from '@/app/payment/utils/ConvertTime';
 import {Loader} from 'lucide-react';
 import QRGenerator from "@/app/payment/component/QrGenerator";
 import axios from "axios";
+import {PaymentSuccess} from "@/app/payment/component/PaymentSuccess";
 
 interface PayButtonProps {
     selectedOption: { code: string; id: string };
@@ -14,7 +15,7 @@ interface PayButtonProps {
     disabled?: boolean;
 }
 
-export default function PayButton({ selectedOption, totalAmount , disabled = false}: PayButtonProps) {
+export default function PayButton({selectedOption, totalAmount, disabled = false}: PayButtonProps) {
     const [loading, setLoading] = useState(false);
     const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null);
     const [timeLeft, setTimeLeft] = useState<string>('');
@@ -28,7 +29,7 @@ export default function PayButton({ selectedOption, totalAmount , disabled = fal
         setLoading(true);
         try {
             const referenceId = `ORDER-${Date.now()}`;
-            const { data } = await api.post('/payment/pay', {
+            const {data} = await api.post('/payment/pay', {
                 name: 'Adi Ridho',
                 phone: '08123456789',
                 email: 'adi@example.com',
@@ -109,7 +110,7 @@ export default function PayButton({ selectedOption, totalAmount , disabled = fal
                     className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700
                      text-white rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    {loading && <Loader className="w-5 h-5 animate-spin" />}
+                    {loading && <Loader className="w-5 h-5 animate-spin"/>}
                     {loading ? 'Memproses...' : 'Bayar Sekarang'}
                 </button>
             ) : (
@@ -124,32 +125,42 @@ export default function PayButton({ selectedOption, totalAmount , disabled = fal
             {/* ===== PAYMENT INSTRUCTIONS ===== */}
             {paymentInfo && (
                 <div className="p-4 border rounded-xl bg-gray-50 shadow-sm space-y-4">
-                    <h2 className="text-lg font-semibold text-gray-700">Instruksi Pembayaran</h2>
+                    {!isPaid && (
+                        <div>
+                            <h2 className="text-lg font-semibold text-gray-700">Instruksi Pembayaran</h2>
 
-                    {selectedOption.code === 'va' && (
-                        <div className="space-y-2 text-sm text-gray-700">
-                            <p><strong>Bank:</strong> {paymentInfo.Channel}</p>
-                            <p><strong>Nomor VA:</strong> <code>{paymentInfo.PaymentNo}</code></p>
-                            <p><strong>Total:</strong> {formatCurrency(paymentInfo.Total)}</p>
-                            <p><strong>Biaya:</strong> {formatCurrency(paymentInfo.Fee)}</p>
-                            <p><strong>Kedaluwarsa:</strong> {paymentInfo.Expired}</p>
-                            <p><strong>Sisa Waktu:</strong> {timeLeft}</p>
-                        </div>
-                    )}
+                            {selectedOption.code === 'va' && (
+                                <div className="space-y-2 text-sm text-gray-700">
+                                    <p><strong>Bank:</strong> {paymentInfo.Channel}</p>
+                                    <p><strong>Nomor VA:</strong> <code>{paymentInfo.PaymentNo}</code></p>
+                                    <p><strong>Total:</strong> {formatCurrency(paymentInfo.Total)}</p>
+                                    <p><strong>Biaya:</strong> {formatCurrency(paymentInfo.Fee)}</p>
+                                    <p><strong>Kedaluwarsa:</strong> {paymentInfo.Expired}</p>
+                                    <p><strong>Sisa Waktu:</strong> {timeLeft}</p>
+                                </div>
+                            )}
 
-                    {selectedOption.code === 'qris' && (
-                        <div className="flex flex-col items-center space-y-3">
-                            <QRGenerator value={paymentInfo.QrString} />
-                            <p className="text-sm text-gray-600">
-                                Sisa waktu pembayaran: <strong>{timeLeft}</strong>
-                            </p>
+                            {selectedOption.code === 'qris' && (
+                                <div className="flex flex-col items-center space-y-3">
+                                    <QRGenerator value={paymentInfo.QrString}/>
+                                    <p className="text-sm text-gray-600">
+                                        Sisa waktu pembayaran: <strong>{timeLeft}</strong>
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     )}
 
                     {isPaid && (
-                        <div className="mt-4 p-3 text-green-700 bg-green-100 border border-green-300 rounded-md text-sm text-center">
-                            🎉 Pembayaran berhasil diterima!
-                        </div>
+                        <PaymentSuccess
+                            referenceId={paymentInfo.ReferenceId}
+                            methodName={selectedOption.id}
+                            amount={paymentInfo.Total}
+                            onBackHome={() => {
+                                setPaymentInfo(null);
+                                setIsPaid(false);
+                            }}
+                        />
                     )}
                 </div>
             )}
