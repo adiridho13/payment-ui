@@ -45,13 +45,15 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
             let userMsg = "Terjadi kesalahan saat pembayaran."
 
             if (axios.isAxiosError(error)) {
-                // log the full response payload
-                console.error("Response payload:", error.response?.data)
-
-                const serverMsg = (error.response?.data as any)?.message
-                if (typeof serverMsg === "string") {
-                    userMsg = serverMsg
+                // Asumsikan response.data punya shape { message?: string }
+                interface ErrorPayload {
+                    message?: string
                 }
+
+                const payload = error.response?.data as ErrorPayload;
+                userMsg = typeof payload.message === 'string'
+                    ? payload.message
+                    : "Terjadi kesalahan server";
             } else {
                 console.error("Unknown error:", error)
             }
