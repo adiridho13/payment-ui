@@ -30,14 +30,13 @@ export default function PaymentUI() {
         code: string; id: string; name: string; icon: string
     } | null>(null);
     const [openGroup, setOpenGroup] = useState<string | null>(null);
-
+    const [isProcessing, setIsProcessing]     = useState(false);
     const pricePerFeature = 10000;
     const countNumber = parseInt(featureCount, 10) || 0;
     const totalPrice = countNumber * pricePerFeature;
     const isPayDisabled = countNumber === 0;
     const toggleGroup = (label: string) =>
         setOpenGroup(openGroup === label ? null : label);
-
     return <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
         <div className="w-full max-w-md space-y-8">
 
@@ -50,6 +49,7 @@ export default function PaymentUI() {
                     pattern="[0-9]*"
                     maxLength={10}
                     value={featureCount}
+                    disabled={isProcessing}
                     onChange={e => {
                         let val = e.target.value;
                         // biar hanya digit yg boleh masuk:
@@ -106,6 +106,7 @@ export default function PaymentUI() {
                                             type="radio"
                                             name="payment"
                                             className="accent-blue-600"
+                                            disabled={isProcessing}
                                             checked={selectedOption?.id === opt.id}
                                             onChange={() => setSelectedOption(opt)}
                                         />
@@ -125,8 +126,12 @@ export default function PaymentUI() {
                         Tagihan: <strong>Rp {totalPrice.toLocaleString("id-ID")}</strong>
                     </p>
                     <div className="mt-4">
-                        <PayButton selectedOption={selectedOption} totalAmount={totalPrice}
-                                   disabled={isPayDisabled}/>
+                        <PayButton
+                            selectedOption={selectedOption}
+                            totalAmount={totalPrice}
+                            disabled={isPayDisabled}
+                            onStart={setIsProcessing}
+                        />
                     </div>
                 </div>}
 

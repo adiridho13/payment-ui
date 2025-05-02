@@ -13,9 +13,10 @@ interface PayButtonProps {
     selectedOption: { code: string; id: string };
     totalAmount: number;
     disabled?: boolean;
+    onStart?: (processing: boolean) => void
 }
 
-export default function PayButton({selectedOption, totalAmount, disabled = false}: PayButtonProps) {
+export default function PayButton({selectedOption, totalAmount, disabled = false,onStart}: PayButtonProps) {
     const [loading, setLoading] = useState(false);
     const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null);
     const [timeLeft, setTimeLeft] = useState<string>('');
@@ -26,6 +27,7 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
             alert('Pilih metode pembayaran terlebih dahulu.');
             return;
         }
+        onStart?.(true);
         setLoading(true);
         try {
             const referenceId = `ORDER-${Date.now()}`;
@@ -62,10 +64,10 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
             console.error("Displayed to user:", userMsg)
             alert(userMsg)
         } finally {
-            setLoading(false);
+            setLoading(true);
+            onStart?.(true);
         }
     };
-
     // Countdown
     useEffect(() => {
         if (!paymentInfo?.Expired) return;
@@ -115,8 +117,14 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
                     {loading ? 'Memproses...' : 'Bayar Sekarang'}
                 </button>
             ) : (
+                // setPaymentInfo(null)
                 <button
-                    onClick={() => setPaymentInfo(null)}
+                    onClick={() => {
+                        setPaymentInfo(null);
+                        setIsPaid(false);
+                        setLoading(false);
+                        onStart?.(false);
+                    }}
                     className="w-full px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md transition"
                 >
                     Kembali
