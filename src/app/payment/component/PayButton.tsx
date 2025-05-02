@@ -48,7 +48,6 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
                 // log the full response payload
                 console.error("Response payload:", error.response?.data)
 
-                // extract the server’s `message` field if it exists
                 const serverMsg = (error.response?.data as any)?.message
                 if (typeof serverMsg === "string") {
                     userMsg = serverMsg
