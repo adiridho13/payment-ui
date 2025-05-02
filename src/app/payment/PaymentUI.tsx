@@ -31,7 +31,7 @@ export default function PaymentUI() {
     } | null>(null);
     const [openGroup, setOpenGroup] = useState<string | null>(null);
 
-    const pricePerFeature = 1000;
+    const pricePerFeature = 10000;
     const countNumber = parseInt(featureCount, 10) || 0;
     const totalPrice = countNumber * pricePerFeature;
     const isPayDisabled = countNumber === 0;
