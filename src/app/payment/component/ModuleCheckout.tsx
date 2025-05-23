@@ -14,7 +14,7 @@ interface ModuleData {
     items: Item[];
 }
 
-export default function ModuleCheckout(): JSX.Element {
+export default function ModuleCheckout(){
     const router = useRouter();
     const [modules, setModules] = useState<ModuleData[]>([]);
     const [selectedItems, setSelectedItems] = useState<Record<string, Item>>({});
@@ -33,12 +33,17 @@ export default function ModuleCheckout(): JSX.Element {
     }, []);
 
     const toggleItem = (item: Item) => {
-        setSelectedItems((prev) => {
+        setSelectedItems(prev => {
             const next = { ...prev };
-            next[item.id] ? delete next[item.id] : (next[item.id] = item);
+            if (next[item.id]) {
+                delete next[item.id];
+            } else {
+                next[item.id] = item;
+            }
             return next;
         });
     };
+
 
     const items = Object.values(selectedItems);
     const total = items.reduce((sum, it) => sum + it.price, 0);
