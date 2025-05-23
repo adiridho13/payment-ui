@@ -1,0 +1,154 @@
+{
+  "data": [
+    {
+      "module": "Modul Buku Besar",
+      "items": [
+        {
+          "id": "c195e9ee5561",
+          "name": "Facport - Journal Voucher (Tahunan)",
+          "price": 1700000
+        }
+      ]
+    },
+    {
+      "module": "Modul Kas Bank",
+      "items": [
+        {
+          "id": "16064cae42b5",
+          "name": "Facport - Other Deposit (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "5fbc8a5a2e65",
+          "name": "Facport - Other Payment (Tahunan)",
+          "price": 1700000
+        }
+      ]
+    },
+    {
+      "module": "Modul Pembelian",
+      "items": [
+        {
+          "id": "ed7e02f750e3",
+          "name": "Facport - Purchase Invoice (Bulanan)",
+          "price": 400000
+        },
+        {
+          "id": "1070d6dde6f1",
+          "name": "Facport - Purchase Invoice (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "0d173ab40f67",
+          "name": "Facport - Purchase Order (Bulanan)",
+          "price": 400000
+        },
+        {
+          "id": "7c600a0fecd7",
+          "name": "Facport - Purchase Order (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "2c8f04f96c0b",
+          "name": "Facport - Purchase Payment (Bulanan)",
+          "price": 400000
+        },
+        {
+          "id": "6703891b74af",
+          "name": "Facport - Purchase Payment (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "016b3464fb50",
+          "name": "Facport - Purchase Return (Bulanan)",
+          "price": 400000
+        },
+        {
+          "id": "d776015247bc",
+          "name": "Facport - Purchase Return (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "81007328374a",
+          "name": "Facport - Receive Item (Bulanan)",
+          "price": 400000
+        },
+        {
+          "id": "2a88b4edd21c",
+          "name": "Facport - Receive Item (Tahunan)",
+          "price": 1700000
+        }
+      ]
+    },
+    {
+      "module": "Modul Penjualan",
+      "items": [
+        {
+          "id": "441fa44b920a",
+          "name": "Facport - Delivery Order (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "edfaa7725552",
+          "name": "Facport - Sales Invoice (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "f9290b75a6de",
+          "name": "Facport - Sales Order (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "c3ae971bce07",
+          "name": "Facport - Sales Receipt (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "8afdebbff6ce",
+          "name": "Facport - Sales Return (Tahunan)",
+          "price": 1700000
+        }
+      ]
+    },
+    {
+      "module": "Modul Persediaan",
+      "items": [
+        {
+          "id": "82f7ac5e1e70",
+          "name": "Facport - Item Adjustment (Bulanan)",
+          "price": 400000
+        },
+        {
+          "id": "321416da1197",
+          "name": "Facport - Item Adjustment (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "0785f56f2df8",
+          "name": "Facport - Item Transfer (Bulanan)",
+          "price": 400000
+        },
+        {
+          "id": "8e4df8b2f6c7",
+          "name": "Facport - Item Transfer (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "98a4a6ac27c7",
+          "name": "Facport - Job Order (Bulanan)",
+          "price": 400000
+        },
+        {
+          "id": "2b9ea9063a49",
+          "name": "Facport - Job Order (Tahunan)",
+          "price": 1700000
+        },
+        {
+          "id": "77f11c094c6d",
+          "name": "Facport - Roll Over (Tahunan)",
+          "price": 1700000
+        }
+      ]
+    }
+  ]
+}
