@@ -62,6 +62,8 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
 
             // now both console and alert show the server’s message
             console.error("Displayed to user:", userMsg)
+            setLoading(true);
+            onStart?.(true);
             alert(userMsg)
         } finally {
             setLoading(true);
@@ -144,7 +146,7 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
                                     <p><strong>Nomor VA:</strong> <code>{paymentInfo.PaymentNo}</code></p>
                                     <p><strong>Total:</strong> {formatCurrency(paymentInfo.Total)}</p>
                                     <p><strong>Biaya:</strong> {formatCurrency(paymentInfo.Fee)}</p>
-                                    <p><strong>Kedaluwarsa:</strong> {paymentInfo.Expired}</p>
+                                    <p><strong>Kadaluarsa:</strong> {paymentInfo.Expired}</p>
                                     <p><strong>Sisa Waktu:</strong> {timeLeft}</p>
                                 </div>
                             )}

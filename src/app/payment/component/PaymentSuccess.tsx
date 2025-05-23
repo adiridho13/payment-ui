@@ -60,7 +60,7 @@ export function PaymentSuccess({
 
             <div className="space-y-2 text-gray-800">
                 <p><span className="font-medium">Reference ID:</span> {referenceId}</p>
-                <p><span className="font-medium">Metode:</span> {methodName}</p>
+                <p><span className="font-medium">Metode:</span> {methodName?.toUpperCase()}</p>
                 <p>
                     <span className="font-medium">Jumlah:</span> Rp{' '}
                     {amount.toLocaleString('id-ID')}
@@ -78,7 +78,10 @@ export function PaymentSuccess({
                 {/*    Lihat Invoice*/}
                 {/*</button>*/}
                 <button
-                    onClick={() => onBackHome?.()}
+                    onClick={() => {
+                        // now allowed because of allow-top-navigation
+                        // window.top.location.href = 'http://localhost/facport';
+                    }}
                     className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-100 transition"
                 >
                     Kembali ke Beranda
