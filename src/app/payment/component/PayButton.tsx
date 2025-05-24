@@ -21,7 +21,7 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
     const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null);
     const [timeLeft, setTimeLeft] = useState<string>('');
     const [isPaid, setIsPaid] = useState(false);
-
+    const API_URL = process.env.NEXT_PUBLIC_API_URL
     const handlePay = async () => {
         if (!selectedOption) {
             alert('Pilih metode pembayaran terlebih dahulu.');
@@ -39,7 +39,7 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
                 comments: 'test payment',
                 paymentMethod: selectedOption.code,
                 paymentChannel: selectedOption.id,
-                notifyUrl: 'http://localhost:3000/payment/callback-url',
+                notifyUrl: `${API_URL}/payment/callback-url`,
                 referenceId,
             });
             setPaymentInfo(data.Data);
