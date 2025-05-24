@@ -149,6 +149,16 @@
           "price": 1700000
         }
       ]
+    },
+    {
+      "module": "Modul Test",
+      "items": [
+        {
+          "id": "82f7ac5e1e70",
+          "name": "Facport - Item Test",
+          "price": 10000
+        }
+      ]
     }
   ]
 }
