@@ -45,6 +45,7 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
             setPaymentInfo(data.Data);
         } catch (error: unknown) {
             let userMsg = "Terjadi kesalahan saat pembayaran."
+            // const raw = payload ?? {};
 
             if (axios.isAxiosError(error)) {
                 // Asumsikan response.data punya shape { message?: string }
@@ -53,8 +54,8 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
                 }
 
                 const payload = error.response?.data as ErrorPayload;
-                userMsg = typeof payload.message === 'string'
-                    ? payload.message
+                userMsg = typeof payload?.message === 'string'
+                    ? payload.message!
                     : "Terjadi kesalahan server";
             } else {
                 console.error("Unknown error:", error)

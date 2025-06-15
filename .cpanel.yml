@@ -1,4 +1,6 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/facportd/repositories/payment
-    - /bin/cp -r * $DEPLOYPATH
+    - npm install
+    - npm run build
+    - rm -rf /home/facportd/payment.facport-development.com/*
+    - cp -r build/* /home/facportd/payment.facport-development.com/
