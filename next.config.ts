@@ -34,8 +34,6 @@ const nextConfig = {
                 pathname: '/account123/**'
             }
         ]
-    },
-    output: 'export'
-};
+    }};
 
 module.exports = nextConfig;
