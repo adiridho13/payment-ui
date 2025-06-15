@@ -5,5 +5,5 @@ deployment:
     - npm install >> /home/facportd/deploy.log 2>&1
     - npm run build >> /home/facportd/deploy.log 2>&1
     - rm -rf /home/facportd/payment.facport-development.com/* >> /home/facportd/deploy.log 2>&1
-    - cp -r build/* /home/facportd/payment.facport-development.com/ >> /home/facportd/deploy.log 2>&1
+    - cp -r out/* /home/facportd/payment.facport-development.com/ >> /home/facportd/deploy.log 2>&1
     - echo "DEPLOY END at $(date)" >> /home/facportd/deploy.log
