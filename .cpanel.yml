@@ -1,16 +1,9 @@
 deployment:
   tasks:
-    - echo "== START DEPLOYMENT == $(date)" >> /home/facportd/deploy.log
-    - echo "[STEP] npm install..." >> /home/facportd/deploy.log
+    - echo "START DEPLOY at $(date)" > /home/facportd/deploy.log
+    - source ~/.bash_profile >> /home/facportd/deploy.log 2>&1
     - npm install >> /home/facportd/deploy.log 2>&1
-
-    - echo "[STEP] npm run build..." >> /home/facportd/deploy.log
     - npm run build >> /home/facportd/deploy.log 2>&1
-
-    - echo "[STEP] Clean old files..." >> /home/facportd/deploy.log
     - rm -rf /home/facportd/payment.facport-development.com/* >> /home/facportd/deploy.log 2>&1
-
-    - echo "[STEP] Copy new build..." >> /home/facportd/deploy.log
     - cp -r build/* /home/facportd/payment.facport-development.com/ >> /home/facportd/deploy.log 2>&1
-
-    - echo "== DEPLOYMENT COMPLETED SUCCESSFULLY == $(date)" >> /home/facportd/deploy.log
+    - echo "DEPLOY END at $(date)" >> /home/facportd/deploy.log
