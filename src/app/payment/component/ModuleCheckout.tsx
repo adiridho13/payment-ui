@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import {useFormStore} from "@/app/payment/stores/userFormStore";
 
 interface Item {
     id: string;
@@ -20,6 +21,7 @@ export default function ModuleCheckout(){
     const [selectedItems, setSelectedItems] = useState<Record<string, Item>>({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    // const { username, email, phone, notes } = useFormStore();
 
     useEffect(() => {
         fetch('/mock/items.json')

@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import Image from 'next/image';
-import { ChevronDown } from 'lucide-react';
+import {ChevronDown} from 'lucide-react';
 import PayButton from './component/PayButton';
 
 interface Item {
@@ -15,17 +15,17 @@ const paymentGroups = [
     {
         label: 'QRIS',
         options: [
-            { code: 'qris', id: 'qris', name: 'QRIS', icon: '/qris.png' }
+            {code: 'qris', id: 'qris', name: 'QRIS', icon: '/qris.png'}
         ],
     },
     {
         label: 'Virtual Account',
         options: [
-            { code: 'va', id: 'bca',    name: 'BCA',    icon: 'https://images.tokopedia.net/img/payment/icons/bca.png' },
-            { code: 'va', id: 'mandiri',name: 'Mandiri',icon: 'https://images.tokopedia.net/img/payment/icons/mandiri.png' },
-            { code: 'va', id: 'bri',    name: 'BRI',    icon: 'https://images.tokopedia.net/img/payment/icons/briva.png' },
-            { code: 'va', id: 'bni',    name: 'BNI',    icon: 'https://images.tokopedia.net/img/payment/icons/bni.png' },
-            { code: 'va', id: 'bsi',    name: 'BSI',    icon: 'https://images.tokopedia.net/img/payment/icons/bsi.png' },
+            {code: 'va', id: 'bca', name: 'BCA', icon: '/banksAsset/bca.png'},
+            {code: 'va', id: 'mandiri', name: 'Mandiri', icon: '/banksAsset/mandiri.png'},
+            {code: 'va', id: 'bri', name: 'BRI', icon: '/banksAsset/briva.png'},
+            {code: 'va', id: 'bni', name: 'BNI', icon: '/banksAsset/bni.png'},
+            {code: 'va', id: 'bsi', name: 'BSI', icon: '/banksAsset/bsi.png'},
         ],
     },
 ];
@@ -118,7 +118,7 @@ export default function PaymentUI() {
                                                 checked={selectedOption?.id === opt.id}
                                                 onChange={() => setSelectedOption(opt)}
                                             />
-                                            <Image src={opt.icon} alt={opt.name} width={28} height={28} />
+                                            <Image src={opt.icon} alt={opt.name} width={28} height={28}/>
                                             <span className="font-medium text-gray-900">{opt.name}</span>
                                         </label>
                                     ))}
