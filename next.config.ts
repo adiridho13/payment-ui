@@ -3,8 +3,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
     // Subdomain khusus → tidak perlu basePath
-    basePath: '',
-
+    // basePath: '',
     reactStrictMode: true,
     poweredByHeader: false,
     compress: true,
