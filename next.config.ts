@@ -1,22 +1,38 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
+    // Subdomain khusus → tidak perlu basePath
+    basePath: '',
+
+    reactStrictMode: true,
+    poweredByHeader: false,
+    compress: true,
+
     eslint: {
-        // Warning: This allows production builds to successfully complete even if
-        // your project has ESLint errors.
         ignoreDuringBuilds: true,
     },
+
+    output: 'standalone',
+
     images: {
-        domains: [
-            "images.tokopedia.net",
-            "sandbox.ipaymu.com"
-        ],
+        domains: ['sandbox.ipaymu.com'],
         remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: 'assets.example.com',
-                pathname: '/account123/**'
-            }
-        ]
-    }};
+            // contoh: jika nanti load gambar dari subdomain kamu sendiri
+        ],
+    },
+
+    async rewrites() {
+        if (!isProd) {
+            return [
+                {
+                    source: '/api/:path*',
+                    destination: 'http://localhost:3001/api/:path*',
+                },
+            ];
+        }
+        return [];
+    },
+};
 
 module.exports = nextConfig;
