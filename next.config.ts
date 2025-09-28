@@ -3,13 +3,11 @@ const nextConfig = {
     eslint: {
         // Warning: This allows production builds to successfully complete even if
         // your project has ESLint errors.
-        reactStrictMode: true,
-        poweredByHeader: false,
-        compress: true,
         ignoreDuringBuilds: true,
     },
     images: {
         domains: [
+            "images.tokopedia.net",
             "sandbox.ipaymu.com"
         ],
         remotePatterns: [
