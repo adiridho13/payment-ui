@@ -22,10 +22,11 @@ export function PaymentSuccess({
                                }: SuccessProps) {
     const [paidDate, setPaidDate] = useState<string>('');
     const [loading, setLoading]   = useState(true);
+    const API_URL = process.env.NEXT_PUBLIC_API_URL
 
     useEffect(() => {
         let cancelled = false;
-        api.get(`/payment/status?referenceId=${referenceId}`)
+        api.get(`${API_URL}/payment/status?referenceId=${referenceId}`)
             .then(r => {
                 if (cancelled) return;
                 if (r.data.paid && typeof r.data.paymentDate === 'string') {

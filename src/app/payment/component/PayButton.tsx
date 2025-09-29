@@ -31,7 +31,7 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
         setLoading(true);
         try {
             const referenceId = `ORDER-${Date.now()}`;
-            const {data} = await api.post('/payment/pay', {
+            const {data} = await api.post(`${API_URL}/payment/pay`, {
                 name: 'Adi Ridho',
                 phone: '08123456789',
                 email: 'adi@example.com',
@@ -93,7 +93,7 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
         const iv = setInterval(async () => {
             try {
                 const r = await api.get(
-                    `/payment/status?referenceId=${paymentInfo.ReferenceId}`
+                    `${API_URL}/payment/status?referenceId=${paymentInfo.ReferenceId}`
                 );
                 if (r.data?.paid) {
                     setIsPaid(true);
