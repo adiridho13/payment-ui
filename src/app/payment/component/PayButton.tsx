@@ -4,11 +4,10 @@ import api from '@/app/lib/api'
 import {PaymentInfo} from '@/app/payment/types/PaymentInfo';
 import {formatCurrency} from '@/app/payment/utils/CurrencyFormat';
 import {formatCountdown} from '@/app/payment/utils/ConvertTime';
-import {Loader} from 'lucide-react';
 import QRGenerator from "@/app/payment/component/QrGenerator";
 import axios from "axios";
 import {PaymentSuccess} from "@/app/payment/component/PaymentSuccess";
-
+import {Loader, Check, Copy} from 'lucide-react';
 interface PayButtonProps {
     selectedOption: { code: string; id: string };
     totalAmount: number;
@@ -16,11 +15,13 @@ interface PayButtonProps {
     onStart?: (processing: boolean) => void
 }
 
-export default function PayButton({selectedOption, totalAmount, disabled = false,onStart}: PayButtonProps) {
+export default function PayButton({selectedOption, totalAmount, disabled = false, onStart}: PayButtonProps) {
     const [loading, setLoading] = useState(false);
     const [paymentInfo, setPaymentInfo] = useState<PaymentInfo | null>(null);
     const [timeLeft, setTimeLeft] = useState<string>('');
     const [isPaid, setIsPaid] = useState(false);
+    const [copied, setCopied] = useState(false);
+
     const API_URL = process.env.NEXT_PUBLIC_API_URL
     const handlePay = async () => {
         if (!selectedOption) {
@@ -30,7 +31,7 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
         onStart?.(true);
         setLoading(true);
         try {
-            const referenceId = `ORDER-${Date.now()}`;
+            const referenceId = `FACPORT-${Date.now()}`;
             const {data} = await api.post(`${API_URL}/payment/pay`, {
                 name: 'Adi Ridho',
                 phone: '08123456789',
@@ -87,6 +88,11 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
         return () => clearInterval(iv);
     }, [paymentInfo]);
 
+    const copyVA = async (text: string) => {
+        await navigator.clipboard.writeText(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1200);
+    };
     // Poll status
     useEffect(() => {
         if (!paymentInfo?.ReferenceId) return;
@@ -128,7 +134,7 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
                         setLoading(false);
                         onStart?.(false);
                     }}
-                    className="w-full px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md transition"
+                    className="w-full px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 border border-gray-300 hover:bg-gray-100 rounded-md transition"
                 >
                     Kembali
                 </button>
@@ -144,7 +150,24 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
                             {selectedOption.code === 'va' && (
                                 <div className="space-y-2 text-sm text-gray-700">
                                     <p><strong>Bank:</strong> {paymentInfo.Channel}</p>
-                                    <p><strong>Nomor VA:</strong> <code>{paymentInfo.PaymentNo}</code></p>
+
+                                    {/* Nomor VA + tombol Copy di sebelahnya */}
+                                    <div className="flex items-center gap-2">
+                                        <strong>Nomor VA:</strong>
+                                        <code className="tracking-wide">{paymentInfo.PaymentNo}</code>
+                                        <button
+                                            onClick={() => copyVA(paymentInfo.PaymentNo)}
+                                            className="inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md
+             bg-gray-100 hover:bg-gray-200 active:scale-95 transition-colors
+             focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                            aria-label="Salin nomor VA"
+                                        >
+                                            {copied ? <Check className="w-3 h-3 text-green-600" /> : <Copy className="w-3 h-3 text-gray-600" />}
+                                            {copied ? 'Copied' : 'Copy'}
+                                        </button>
+
+                                    </div>
+
                                     <p><strong>Total:</strong> {formatCurrency(paymentInfo.Total)}</p>
                                     <p><strong>Biaya:</strong> {formatCurrency(paymentInfo.Fee)}</p>
                                     <p><strong>Kadaluarsa:</strong> {paymentInfo.Expired}</p>
@@ -154,7 +177,7 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
 
                             {selectedOption.code === 'qris' && (
                                 <div className="flex flex-col items-center space-y-3">
-                                    <QRGenerator value={paymentInfo.QrString}/>
+                                    <QRGenerator value={paymentInfo.QrString} />
                                     <p className="text-sm text-gray-600">
                                         Sisa waktu pembayaran: <strong>{timeLeft}</strong>
                                     </p>

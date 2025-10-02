@@ -78,15 +78,15 @@ export function PaymentSuccess({
                 {/*>*/}
                 {/*    Lihat Invoice*/}
                 {/*</button>*/}
-                <button
-                    onClick={() => {
-                        // now allowed because of allow-top-navigation
-                        // window.top.location.href = 'http://localhost/facport';
-                    }}
-                    className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-100 transition"
-                >
-                    Kembali ke Beranda
-                </button>
+                {/*<button*/}
+                {/*    onClick={() => {*/}
+                {/*        // now allowed because of allow-top-navigation*/}
+                {/*        // window.top.location.href = 'http://localhost/facport';*/}
+                {/*    }}*/}
+                {/*    className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-100 transition"*/}
+                {/*>*/}
+                {/*    Kembali ke Beranda*/}
+                {/*</button>*/}
             </div>
         </div>
     );
