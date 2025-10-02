@@ -40,7 +40,7 @@ export default function PayButton({selectedOption, totalAmount, disabled = false
                 comments: 'test payment',
                 paymentMethod: selectedOption.code,
                 paymentChannel: selectedOption.id,
-                notifyUrl: `${API_URL}/payment/callback-url`,
+                notifyUrl: `${API_URL}/ipaymu/callback`,
                 referenceId,
             });
             setPaymentInfo(data.Data);
